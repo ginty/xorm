@@ -3703,19 +3703,19 @@ func (session *Session) Update(bean interface{}, condiBean ...interface{}) (int6
 	} else {
 		lenAfterClosures := len(session.afterClosures)
 		if lenAfterClosures > 0 {
-			if value, has := session.afterUpdateBeans[bean]; has && value != nil {
-				*value = append(*value, session.afterClosures...)
-			} else {
-				afterClosures := make([]func(interface{}), lenAfterClosures)
-				copy(afterClosures, session.afterClosures)
-				// FIXME: if bean is a map type, it will panic because map cannot be as map key
-				session.afterUpdateBeans[bean] = &afterClosures
-			}
+			//if value, has := session.afterUpdateBeans[bean]; has && value != nil {
+			//	*value = append(*value, session.afterClosures...)
+			//} else {
+			afterClosures := make([]func(interface{}), lenAfterClosures)
+			copy(afterClosures, session.afterClosures)
+			//		// FIXME: if bean is a map type, it will panic because map cannot be as map key
+			//		session.afterUpdateBeans[bean] = &afterClosures
+			//	}
 
 		} else {
-			if _, ok := interface{}(bean).(AfterInsertProcessor); ok {
-				session.afterUpdateBeans[bean] = nil
-			}
+			//if _, ok := interface{}(bean).(AfterInsertProcessor); ok {
+			//	session.afterUpdateBeans[bean] = nil
+			//}
 		}
 	}
 	cleanupProcessorsClosures(&session.afterClosures) // cleanup after used
